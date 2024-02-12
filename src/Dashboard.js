@@ -18,9 +18,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import UpdateIcon from '@mui/icons-material/Update';
+import ViewListIcon from '@mui/icons-material/ViewList';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FullScreenDialog from './FullScreenDialog';
+
 
 function Copyright(props) {
     return (
@@ -90,6 +94,16 @@ export default function Dashboard() {
         setOpen(!open);
     };
 
+    const [dialogOpen, setDialogOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setDialogOpen(true);
+    };
+
+    const handleClose = () => {
+        setDialogOpen(false);
+    };
+
     return (
         <ThemeProvider theme={defaultTheme}>
             <Box sx={{ display: 'flex' }}>
@@ -119,7 +133,7 @@ export default function Dashboard() {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
-                            Dashboard
+                            Clear Flow
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
@@ -158,12 +172,116 @@ export default function Dashboard() {
                         flexGrow: 1,
                         height: '100vh',
                         overflow: 'auto',
+                        display: 'flex',
+                        flexDirection: 'column'
                     }}
                 >
                     <Toolbar />
+                    <Box textAlign="center">
+                        <Typography variant="h3" component="h1">
+                            Publication
+                        </Typography>
+                    </Box>
+                    <Grid container justifyContent="center" alignItems="center" sx={{ gap: 2, height: '100vh' }}>
+                        <Grid item xs={12} md={5} lg={5} style={{ height: '16vw' }}>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                                    backgroundColor: '#2196f3', // Primary button color
+                                    color: 'white', // Text color
+                                    width: '100%', // Ensure full width
+                                    height: '100%',
+                                    textAlign: 'center', // Center text
+                                }}
+                                onClick={handleClickOpen}
+                            >
+                                <AddIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
+                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>Add Clearance</span>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} md={5} lg={5} style={{ height: '16vw' }}>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                                    backgroundColor: '#f44336', // Secondary button color
+                                    color: 'white', // Text color
+                                    width: '100%', // Ensure full width
+                                    height: '100%',
+                                    textAlign: 'center', // Center text
+                                }}
+                            >
+                                <DeleteIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
+                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>Remove Clearance</span>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} md={5} lg={5} style={{ height: '16vw' }}>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                                    backgroundColor: '#4caf50', // Info button color
+                                    color: 'white', // Text color
+                                    width: '100%', // Ensure full width
+                                    height: '100%',
+                                    textAlign: 'center', // Center text
+                                }}
+                            >
+                                <UpdateIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
+                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>Update Clearance</span>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} md={5} lg={5} style={{ height: '16vw' }}>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                                    backgroundColor: '#ff9800', // Warning button color
+                                    color: 'white', // Text color
+                                    width: '100%', // Ensure full width
+                                    height: '100%',
+                                    textAlign: 'center', // Center text
+                                }}
+                            >
+                                <ViewListIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
+                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>View Clearances</span>
+                            </div>
+                        </Grid>
+                    </Grid>
 
                 </Box>
             </Box>
+            <FullScreenDialog
+                dialogOpen={dialogOpen}
+                handleClickOpen={handleClickOpen}
+                handleClose={handleClose}
+                title="Add Clearence"
+            />
         </ThemeProvider>
     );
 }
