@@ -94,15 +94,35 @@ export default function Dashboard() {
         setOpen(!open);
     };
 
-    const [addClerencedialogOpen, setAddClerenceDialogOpen] = React.useState(false);
+    const [addClearencedialogOpen, setAddClearenceDialogOpen] = React.useState(false);
+    const [removeClearencedialogOpen, setRemoveClearenceDialogOpen] = React.useState(false);
+    const [updateClearencedialogOpen, setUpdateClearenceDialogOpen] = React.useState(false);
 
     const handleAddClearanceClickOpen = () => {
-        setAddClerenceDialogOpen(true);
+        setAddClearenceDialogOpen(true);
     };
 
     const handleAddClearanceClose = () => {
-        setAddClerenceDialogOpen(false);
+        setAddClearenceDialogOpen(false);
     };
+
+    const handleRemoveClearanceClickOpen = () => {
+        setRemoveClearenceDialogOpen(true)
+    };
+
+    const handleRemoveClearanceClose = () => {
+        setRemoveClearenceDialogOpen(false)
+    };
+
+    const handleUpdateClearanceClickOpen = () => {
+        setUpdateClearenceDialogOpen(true)
+    };
+
+    const handleUpdateClearanceClose = () => {
+        setUpdateClearenceDialogOpen(false)
+    };
+
+
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -223,6 +243,8 @@ export default function Dashboard() {
                                     height: '100%',
                                     textAlign: 'center', // Center text
                                 }}
+                                onClick={handleRemoveClearanceClickOpen}
+
                             >
                                 <DeleteIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
                                 <span style={{ marginLeft: '10px', fontSize: '30px' }}>Remove Clearance</span>
@@ -245,6 +267,8 @@ export default function Dashboard() {
                                     height: '100%',
                                     textAlign: 'center', // Center text
                                 }}
+                                onClick={handleUpdateClearanceClickOpen}
+
                             >
                                 <UpdateIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
                                 <span style={{ marginLeft: '10px', fontSize: '30px' }}>Update Clearance</span>
@@ -277,17 +301,24 @@ export default function Dashboard() {
                 </Box>
             </Box>
             <FullScreenDialog
-                dialogOpen={addClerencedialogOpen}
+                dialogOpen={addClearencedialogOpen}
                 handleClickOpen={handleAddClearanceClickOpen}
                 handleClose={handleAddClearanceClose}
                 title="Add Clearence"
             />
 
             <FullScreenDialog
-                dialogOpen={addClerencedialogOpen}
-                handleClickOpen={handleAddClearanceClickOpen}
-                handleClose={handleAddClearanceClose}
-                title="Add Clearence"
+                dialogOpen={removeClearencedialogOpen}
+                handleClickOpen={handleRemoveClearanceClickOpen}
+                handleClose={handleRemoveClearanceClose}
+                title="Remove Clearance"
+            />
+
+            <FullScreenDialog
+                dialogOpen={updateClearencedialogOpen}
+                handleClickOpen={handleUpdateClearanceClickOpen}
+                handleClose={handleUpdateClearanceClose}
+                title="Update Clearance"
             />
         </ThemeProvider>
     );
