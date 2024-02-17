@@ -97,6 +97,7 @@ export default function Dashboard() {
     const [addClearencedialogOpen, setAddClearenceDialogOpen] = React.useState(false);
     const [removeClearencedialogOpen, setRemoveClearenceDialogOpen] = React.useState(false);
     const [updateClearencedialogOpen, setUpdateClearenceDialogOpen] = React.useState(false);
+    const [viewClearencedialogOpen, setViewClearenceDialogOpen] = React.useState(false);
 
     const handleAddClearanceClickOpen = () => {
         setAddClearenceDialogOpen(true);
@@ -120,6 +121,14 @@ export default function Dashboard() {
 
     const handleUpdateClearanceClose = () => {
         setUpdateClearenceDialogOpen(false)
+    };
+
+    const handleViewClearanceClickOpen = () => {
+        setViewClearenceDialogOpen(true)
+    };
+
+    const handleViewClearanceClose = () => {
+        setViewClearenceDialogOpen(false)
     };
 
 
@@ -291,6 +300,8 @@ export default function Dashboard() {
                                     height: '100%',
                                     textAlign: 'center', // Center text
                                 }}
+                                onClick={handleViewClearanceClickOpen}
+
                             >
                                 <ViewListIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
                                 <span style={{ marginLeft: '10px', fontSize: '30px' }}>View Clearances</span>
@@ -319,6 +330,13 @@ export default function Dashboard() {
                 handleClickOpen={handleUpdateClearanceClickOpen}
                 handleClose={handleUpdateClearanceClose}
                 title="Update Clearance"
+            />
+
+            <FullScreenDialog
+                dialogOpen={viewClearencedialogOpen}
+                handleClickOpen={handleViewClearanceClickOpen}
+                handleClose={handleViewClearanceClose}
+                title="View Clearance"
             />
         </ThemeProvider>
     );
