@@ -94,14 +94,14 @@ export default function Dashboard() {
         setOpen(!open);
     };
 
-    const [dialogOpen, setDialogOpen] = React.useState(false);
+    const [addClerencedialogOpen, setAddClerenceDialogOpen] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setDialogOpen(true);
+    const handleAddClearanceClickOpen = () => {
+        setAddClerenceDialogOpen(true);
     };
 
-    const handleClose = () => {
-        setDialogOpen(false);
+    const handleAddClearanceClose = () => {
+        setAddClerenceDialogOpen(false);
     };
 
     return (
@@ -200,7 +200,7 @@ export default function Dashboard() {
                                     height: '100%',
                                     textAlign: 'center', // Center text
                                 }}
-                                onClick={handleClickOpen}
+                                onClick={handleAddClearanceClickOpen}
                             >
                                 <AddIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
                                 <span style={{ marginLeft: '10px', fontSize: '30px' }}>Add Clearance</span>
@@ -277,9 +277,16 @@ export default function Dashboard() {
                 </Box>
             </Box>
             <FullScreenDialog
-                dialogOpen={dialogOpen}
-                handleClickOpen={handleClickOpen}
-                handleClose={handleClose}
+                dialogOpen={addClerencedialogOpen}
+                handleClickOpen={handleAddClearanceClickOpen}
+                handleClose={handleAddClearanceClose}
+                title="Add Clearence"
+            />
+
+            <FullScreenDialog
+                dialogOpen={addClerencedialogOpen}
+                handleClickOpen={handleAddClearanceClickOpen}
+                handleClose={handleAddClearanceClose}
                 title="Add Clearence"
             />
         </ThemeProvider>
