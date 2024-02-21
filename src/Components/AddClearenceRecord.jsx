@@ -166,11 +166,6 @@ export default function AddClearanceRecord() {
             </DemoContainer>
           </LocalizationProvider>
         </Grid>
-        <Grid item xs={12}>
-          <Button variant="contained" color="primary" type="submit">
-            Submit
-          </Button>
-        </Grid>
       </Grid>
     </form>
   );
