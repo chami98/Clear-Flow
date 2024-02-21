@@ -14,24 +14,24 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-function createData(name, calories, fat, carbs, protein, price) {
+function createData(fullName, registrationNumber, intake, degree, price) {
     return {
-        name,
-        calories,
-        fat,
-        carbs,
-        protein,
-        price,
-        history: [
+        fullName,
+        registrationNumber,
+        intake,
+        degree,
+        clearenceDetails: [
             {
                 date: '2020-01-05',
-                customerId: '11091700',
-                amount: 3,
+                name: 'Printer',
+                description: 'Offset Printer',
+                value: 50000
             },
             {
                 date: '2020-01-02',
-                customerId: 'Anonymous',
-                amount: 1,
+                name: 'Anonymous',
+                description: 1,
+                value: 60
             },
         ],
     };
@@ -54,39 +54,38 @@ function Row(props) {
                     </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">
-                    {row.name}
+                    {row.fullName}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="right">{row.registrationNumber}</TableCell>
+                <TableCell align="right">{row.intake}</TableCell>
+                <TableCell align="right">{row.degree}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
                             <Typography variant="h6" gutterBottom component="div">
-                                History
+                                Clearence Details
                             </Typography>
                             <Table size="small" aria-label="purchases">
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Date</TableCell>
-                                        <TableCell>Customer</TableCell>
-                                        <TableCell align="right">Amount</TableCell>
-                                        <TableCell align="right">Total price ($)</TableCell>
+                                        <TableCell>Name</TableCell>
+                                        <TableCell align="right">Description</TableCell>
+                                        <TableCell align="right">Value</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {row.history.map((historyRow) => (
-                                        <TableRow key={historyRow.date}>
+                                    {row.clearenceDetails.map((clearenceDetailsRow) => (
+                                        <TableRow key={clearenceDetailsRow.date}>
                                             <TableCell component="th" scope="row">
-                                                {historyRow.date}
+                                                {clearenceDetailsRow.date}
                                             </TableCell>
-                                            <TableCell>{historyRow.customerId}</TableCell>
-                                            <TableCell align="right">{historyRow.amount}</TableCell>
+                                            <TableCell>{clearenceDetailsRow.name}</TableCell>
+                                            <TableCell align="right">{clearenceDetailsRow.description}</TableCell>
                                             <TableCell align="right">
-                                                {Math.round(historyRow.amount * row.price * 100) / 100}
+                                                {clearenceDetailsRow.value}
                                             </TableCell>
                                         </TableRow>
                                     ))}
@@ -102,28 +101,39 @@ function Row(props) {
 
 Row.propTypes = {
     row: PropTypes.shape({
-        calories: PropTypes.number.isRequired,
-        carbs: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        history: PropTypes.arrayOf(
+        registrationNumber: PropTypes.number.isRequired,
+        degree: PropTypes.number.isRequired,
+        intake: PropTypes.number.isRequired,
+        clearenceDetails: PropTypes.arrayOf(
             PropTypes.shape({
-                amount: PropTypes.number.isRequired,
-                customerId: PropTypes.string.isRequired,
+                description: PropTypes.number.isRequired,
+                name: PropTypes.string.isRequired,
                 date: PropTypes.string.isRequired,
             }),
         ).isRequired,
-        name: PropTypes.string.isRequired,
+        fullName: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
-        protein: PropTypes.number.isRequired,
     }).isRequired,
 };
 
 const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-    createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-    createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-    createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
+    createData('Vinodi Nikeshani', 'D/BIT/22/0007', 'Intake 39', 'Information Technology'),
+    createData('John Doe', 'D/BIT/22/0008', 'Intake 39', 'Information Technology'),
+    createData('Jane Smith', 'D/BIT/22/0009', 'Intake 39', 'Information Technology'),
+    createData('David Brown', 'D/BIT/22/0010', 'Intake 39', 'Information Technology'),
+    createData('Emily Johnson', 'D/BIT/22/0011', 'Intake 39', 'Information Technology'),
+    createData('Michael Lee', 'D/BIT/22/0012', 'Intake 39', 'Information Technology'),
+    createData('Sarah Garcia', 'D/BIT/22/0013', 'Intake 39', 'Information Technology'),
+    createData('Christopher Martinez', 'D/BIT/22/0014', 'Intake 39', 'Information Technology'),
+    createData('Amanda Rodriguez', 'D/BIT/22/0015', 'Intake 39', 'Information Technology'),
+    createData('Daniel Hernandez', 'D/BIT/22/0016', 'Intake 39', 'Information Technology'),
+    createData('Jennifer Wilson', 'D/BIT/22/0017', 'Intake 39', 'Information Technology'),
+    createData('Eva Gonzalez', 'D/SVS/22/0018', 'Intake 39', 'Survey Science'),
+    createData('Matthew Anderson', 'D/BIS/22/0019', 'Intake 39', 'Information Systems'),
+    createData('Linda Moore', 'D/BARC/22/0020', 'Intake 39', 'Architecture'),
+    createData('William Taylor', 'D/BQS/22/0021', 'Intake 39', 'Quantity Survey'),
+    createData('Olivia Thomas', 'D/SVS/22/0022', 'Intake 39', 'Survey Science'),
+
 ];
 
 export default function CollapsibleTable() {
@@ -133,16 +143,15 @@ export default function CollapsibleTable() {
                 <TableHead>
                     <TableRow>
                         <TableCell />
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                        <TableCell>Full Name</TableCell>
+                        <TableCell align="right">Registration Number</TableCell>
+                        <TableCell align="right">Intake</TableCell>
+                        <TableCell align="right">Degree</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
-                        <Row key={row.name} row={row} />
+                        <Row key={row.fullName} row={row} />
                     ))}
                 </TableBody>
             </Table>
