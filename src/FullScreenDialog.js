@@ -17,10 +17,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function FullScreenDialog({
-    dialogOpen, handleClickOpen, handleClose, title
+    dialogOpen, handleClickOpen, handleClose, title, contentComponent
 }) {
-
-
     return (
         <React.Fragment>
             <Dialog
@@ -47,7 +45,7 @@ export default function FullScreenDialog({
                         </Button>
                     </Toolbar>
                 </AppBar>
-
+                {contentComponent}
             </Dialog>
         </React.Fragment>
     );
