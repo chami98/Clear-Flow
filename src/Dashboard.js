@@ -24,6 +24,7 @@ import UpdateIcon from '@mui/icons-material/Update';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FullScreenDialog from './FullScreenDialog';
+import AddClearenceRecord from './Components/AddClearenceRecord';
 
 
 function Copyright(props) {
@@ -232,7 +233,7 @@ export default function Dashboard() {
                                 onClick={handleAddClearanceClickOpen}
                             >
                                 <AddIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
-                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>Add Clearance</span>
+                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>Add Clearance Record</span>
                             </div>
                         </Grid>
                         <Grid item xs={12} md={5} lg={5} style={{ height: '16vw' }}>
@@ -256,7 +257,7 @@ export default function Dashboard() {
 
                             >
                                 <DeleteIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
-                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>Remove Clearance</span>
+                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>Remove Clearance Record</span>
                             </div>
                         </Grid>
                         <Grid item xs={12} md={5} lg={5} style={{ height: '16vw' }}>
@@ -280,7 +281,7 @@ export default function Dashboard() {
 
                             >
                                 <UpdateIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
-                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>Update Clearance</span>
+                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>Update Clearance Record</span>
                             </div>
                         </Grid>
                         <Grid item xs={12} md={5} lg={5} style={{ height: '16vw' }}>
@@ -304,7 +305,7 @@ export default function Dashboard() {
 
                             >
                                 <ViewListIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
-                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>View Clearances</span>
+                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>View Clearance Records</span>
                             </div>
                         </Grid>
                     </Grid>
@@ -315,29 +316,31 @@ export default function Dashboard() {
                 dialogOpen={addClearencedialogOpen}
                 handleClickOpen={handleAddClearanceClickOpen}
                 handleClose={handleAddClearanceClose}
-                title="Add Clearence"
+                title="Add Clearence Record"
+                contentComponent={<AddClearenceRecord />}
             />
 
             <FullScreenDialog
                 dialogOpen={removeClearencedialogOpen}
                 handleClickOpen={handleRemoveClearanceClickOpen}
                 handleClose={handleRemoveClearanceClose}
-                title="Remove Clearance"
+                title="Remove Clearance Record"
             />
 
             <FullScreenDialog
                 dialogOpen={updateClearencedialogOpen}
                 handleClickOpen={handleUpdateClearanceClickOpen}
                 handleClose={handleUpdateClearanceClose}
-                title="Update Clearance"
+                title="Update Clearance Record"
             />
 
             <FullScreenDialog
                 dialogOpen={viewClearencedialogOpen}
                 handleClickOpen={handleViewClearanceClickOpen}
                 handleClose={handleViewClearanceClose}
-                title="View Clearance"
+                title="View Clearance Records"
             />
+
         </ThemeProvider>
     );
 }
