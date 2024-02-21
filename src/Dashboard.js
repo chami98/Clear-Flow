@@ -25,6 +25,7 @@ import ViewListIcon from '@mui/icons-material/ViewList';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FullScreenDialog from './FullScreenDialog';
 import AddClearenceRecord from './Components/AddClearenceRecord';
+import CollapsibleTable from './Components/CollapsibleTable';
 
 
 function Copyright(props) {
@@ -275,24 +276,11 @@ export default function Dashboard() {
             />
 
             <FullScreenDialog
-                dialogOpen={removeClearencedialogOpen}
-                handleClickOpen={handleRemoveClearanceClickOpen}
-                handleClose={handleRemoveClearanceClose}
-                title="Remove Clearance Record"
-            />
-
-            <FullScreenDialog
-                dialogOpen={updateClearencedialogOpen}
-                handleClickOpen={handleUpdateClearanceClickOpen}
-                handleClose={handleUpdateClearanceClose}
-                title="Update Clearance Record"
-            />
-
-            <FullScreenDialog
                 dialogOpen={viewClearencedialogOpen}
                 handleClickOpen={handleViewClearanceClickOpen}
                 handleClose={handleViewClearanceClose}
                 title="View Clearance Records"
+                contentComponent={<CollapsibleTable />}
             />
 
         </ThemeProvider>
