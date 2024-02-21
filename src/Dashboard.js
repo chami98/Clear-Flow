@@ -25,6 +25,7 @@ import ViewListIcon from '@mui/icons-material/ViewList';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FullScreenDialog from './FullScreenDialog';
 import AddClearenceRecord from './Components/AddClearenceRecord';
+import CollapsibleTable from './Components/CollapsibleTable';
 
 
 function Copyright(props) {
@@ -207,13 +208,13 @@ export default function Dashboard() {
                     }}
                 >
                     <Toolbar />
-                    <Box textAlign="center">
+                    <Box textAlign="center" sx={{ marginTop: "10px" }} >
                         <Typography variant="h3" component="h1">
                             Publication
                         </Typography>
                     </Box>
                     <Grid container justifyContent="center" alignItems="center" sx={{ gap: 2, height: '100vh' }}>
-                        <Grid item xs={12} md={5} lg={5} style={{ height: '16vw' }}>
+                        <Grid item xs={12} md={5} lg={5} style={{ height: '28vw' }}>
                             <div
                                 style={{
                                     display: 'flex',
@@ -232,59 +233,13 @@ export default function Dashboard() {
                                 }}
                                 onClick={handleAddClearanceClickOpen}
                             >
-                                <AddIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
-                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>Add Clearance Record</span>
+                                <AddIcon style={{ fill: 'white', width: '110px', height: '110px' }} />
+                                <span style={{ marginLeft: '10px', fontSize: '35px' }}>Add Clearance Record</span>
                             </div>
                         </Grid>
-                        <Grid item xs={12} md={5} lg={5} style={{ height: '16vw' }}>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    padding: '10px 20px',
-                                    borderRadius: '8px',
-                                    cursor: 'pointer',
-                                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                                    backgroundColor: '#f44336', // Secondary button color
-                                    color: 'white', // Text color
-                                    width: '100%', // Ensure full width
-                                    height: '100%',
-                                    textAlign: 'center', // Center text
-                                }}
-                                onClick={handleRemoveClearanceClickOpen}
 
-                            >
-                                <DeleteIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
-                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>Remove Clearance Record</span>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12} md={5} lg={5} style={{ height: '16vw' }}>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    padding: '10px 20px',
-                                    borderRadius: '8px',
-                                    cursor: 'pointer',
-                                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                                    backgroundColor: '#4caf50', // Info button color
-                                    color: 'white', // Text color
-                                    width: '100%', // Ensure full width
-                                    height: '100%',
-                                    textAlign: 'center', // Center text
-                                }}
-                                onClick={handleUpdateClearanceClickOpen}
 
-                            >
-                                <UpdateIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
-                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>Update Clearance Record</span>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12} md={5} lg={5} style={{ height: '16vw' }}>
+                        <Grid item xs={12} md={5} lg={5} style={{ height: '28vw' }}>
                             <div
                                 style={{
                                     display: 'flex',
@@ -304,8 +259,8 @@ export default function Dashboard() {
                                 onClick={handleViewClearanceClickOpen}
 
                             >
-                                <ViewListIcon style={{ fill: 'white', width: '40px', height: '40px' }} />
-                                <span style={{ marginLeft: '10px', fontSize: '30px' }}>View Clearance Records</span>
+                                <ViewListIcon style={{ fill: 'white', width: '110px', height: '110px' }} />
+                                <span style={{ marginLeft: '10px', fontSize: '35px' }}>View Clearance Records</span>
                             </div>
                         </Grid>
                     </Grid>
@@ -321,24 +276,11 @@ export default function Dashboard() {
             />
 
             <FullScreenDialog
-                dialogOpen={removeClearencedialogOpen}
-                handleClickOpen={handleRemoveClearanceClickOpen}
-                handleClose={handleRemoveClearanceClose}
-                title="Remove Clearance Record"
-            />
-
-            <FullScreenDialog
-                dialogOpen={updateClearencedialogOpen}
-                handleClickOpen={handleUpdateClearanceClickOpen}
-                handleClose={handleUpdateClearanceClose}
-                title="Update Clearance Record"
-            />
-
-            <FullScreenDialog
                 dialogOpen={viewClearencedialogOpen}
                 handleClickOpen={handleViewClearanceClickOpen}
                 handleClose={handleViewClearanceClose}
                 title="View Clearance Records"
+                contentComponent={<CollapsibleTable />}
             />
 
         </ThemeProvider>
