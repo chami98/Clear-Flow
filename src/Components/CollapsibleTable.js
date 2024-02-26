@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -13,33 +13,11 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-
-function createData(fullName, registrationNumber, intake, degree, price) {
-    return {
-        fullName,
-        registrationNumber,
-        intake,
-        degree,
-        clearenceDetails: [
-            {
-                date: '2020-01-05',
-                name: 'Printer',
-                description: 'Offset Printer',
-                value: 50000
-            },
-            {
-                date: '2020-01-02',
-                name: 'Anonymous',
-                description: 1,
-                value: 60
-            },
-        ],
-    };
-}
+import data from './data.json'
 
 function Row(props) {
     const { row } = props;
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     return (
         <React.Fragment>
@@ -101,42 +79,32 @@ function Row(props) {
 
 Row.propTypes = {
     row: PropTypes.shape({
-        registrationNumber: PropTypes.number.isRequired,
-        degree: PropTypes.number.isRequired,
-        intake: PropTypes.number.isRequired,
+        registrationNumber: PropTypes.string.isRequired,
+        degree: PropTypes.string.isRequired,
+        intake: PropTypes.string.isRequired,
         clearenceDetails: PropTypes.arrayOf(
             PropTypes.shape({
-                description: PropTypes.number.isRequired,
+                description: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
                 name: PropTypes.string.isRequired,
                 date: PropTypes.string.isRequired,
+                value: PropTypes.number.isRequired,
             }),
         ).isRequired,
         fullName: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
     }).isRequired,
 };
 
-const rows = [
-    createData('Vinodi Nikeshani', 'D/BIT/22/0007', 'Intake 39', 'Information Technology'),
-    createData('John Doe', 'D/BIT/22/0008', 'Intake 39', 'Information Technology'),
-    createData('Jane Smith', 'D/BIT/22/0009', 'Intake 39', 'Information Technology'),
-    createData('David Brown', 'D/BIT/22/0010', 'Intake 39', 'Information Technology'),
-    createData('Emily Johnson', 'D/BIT/22/0011', 'Intake 39', 'Information Technology'),
-    createData('Michael Lee', 'D/BIT/22/0012', 'Intake 39', 'Information Technology'),
-    createData('Sarah Garcia', 'D/BIT/22/0013', 'Intake 39', 'Information Technology'),
-    createData('Christopher Martinez', 'D/BIT/22/0014', 'Intake 39', 'Information Technology'),
-    createData('Amanda Rodriguez', 'D/BIT/22/0015', 'Intake 39', 'Information Technology'),
-    createData('Daniel Hernandez', 'D/BIT/22/0016', 'Intake 39', 'Information Technology'),
-    createData('Jennifer Wilson', 'D/BIT/22/0017', 'Intake 39', 'Information Technology'),
-    createData('Eva Gonzalez', 'D/SVS/22/0018', 'Intake 39', 'Survey Science'),
-    createData('Matthew Anderson', 'D/BIS/22/0019', 'Intake 39', 'Information Systems'),
-    createData('Linda Moore', 'D/BARC/22/0020', 'Intake 39', 'Architecture'),
-    createData('William Taylor', 'D/BQS/22/0021', 'Intake 39', 'Quantity Survey'),
-    createData('Olivia Thomas', 'D/SVS/22/0022', 'Intake 39', 'Survey Science'),
-
-];
-
 export default function CollapsibleTable() {
+    const [rows, setRows] = useState([]);
+
+    useEffect(() => {
+
+        setRows(data);
+    },
+
+        []);
+
+
     return (
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
