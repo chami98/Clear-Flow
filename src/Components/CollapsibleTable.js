@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,11 +14,21 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import data from './data.json'
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import data from './data.json';
 
 function Row(props) {
-    const { row } = props;
+    const { row, handleEdit, handleDelete } = props;
     const [open, setOpen] = useState(false);
+
+    const handleEditClick = () => {
+        handleEdit(row);
+    };
+
+    const handleDeleteClick = () => {
+        handleDelete(row);
+    };
 
     return (
         <React.Fragment>
@@ -37,6 +48,14 @@ function Row(props) {
                 <TableCell align="right">{row.registrationNumber}</TableCell>
                 <TableCell align="right">{row.intake}</TableCell>
                 <TableCell align="right">{row.degree}</TableCell>
+                <TableCell align="right">
+                    <IconButton color="primary" onClick={handleEditClick}>
+                        <EditIcon />
+                    </IconButton>
+                    <IconButton color="secondary" onClick={handleDeleteClick}>
+                        <DeleteIcon />
+                    </IconButton>
+                </TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -92,18 +111,31 @@ Row.propTypes = {
         ).isRequired,
         fullName: PropTypes.string.isRequired,
     }).isRequired,
+    handleEdit: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired,
 };
 
-export default function CollapsibleTable() {
+function CollapsibleTable() {
     const [rows, setRows] = useState([]);
 
     useEffect(() => {
-
         setRows(data);
-    },
+    }, []);
 
-        []);
+    const handleEdit = (editedRow) => {
+        const updatedRows = rows.map(row => {
+            if (row.registrationNumber === editedRow.registrationNumber) {
+                return editedRow;
+            }
+            return row;
+        });
+        setRows(updatedRows);
+    };
 
+    const handleDelete = (rowToDelete) => {
+        const updatedRows = rows.filter(row => row.registrationNumber !== rowToDelete.registrationNumber);
+        setRows(updatedRows);
+    };
 
     return (
         <TableContainer component={Paper}>
@@ -115,14 +147,17 @@ export default function CollapsibleTable() {
                         <TableCell align="right">Registration Number</TableCell>
                         <TableCell align="right">Intake</TableCell>
                         <TableCell align="right">Degree</TableCell>
+                        <TableCell align="right">Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
-                        <Row key={row.fullName} row={row} />
+                        <Row key={row.fullName} row={row} handleEdit={handleEdit} handleDelete={handleDelete} />
                     ))}
                 </TableBody>
             </Table>
         </TableContainer>
     );
 }
+
+export default CollapsibleTable;
