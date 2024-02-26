@@ -133,8 +133,11 @@ function CollapsibleTable() {
     };
 
     const handleDelete = (rowToDelete) => {
-        const updatedRows = rows.filter(row => row.registrationNumber !== rowToDelete.registrationNumber);
-        setRows(updatedRows);
+        const isConfirmed = window.confirm(`Are you sure you want to delete ${rowToDelete.fullName}?`);
+        if (isConfirmed) {
+            const updatedRows = rows.filter(row => row.registrationNumber !== rowToDelete.registrationNumber);
+            setRows(updatedRows);
+        }
     };
 
     return (
