@@ -16,13 +16,26 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import data from './data.json';
+import FullScreenDialog from '../FullScreenDialog';
+import AddClearenceRecord from '../Components/AddClearenceRecord';
+
 
 function Row(props) {
     const { row, handleEdit, handleDelete } = props;
     const [open, setOpen] = useState(false);
+    const [editClearenceDialogOpen, setEditClearenceDialogOpen] = React.useState(false);
+
+    const handleEditClearenceClickOpen = () => {
+        setEditClearenceDialogOpen(true);
+    };
+
+    const handleEditClearenceClose = () => {
+        setEditClearenceDialogOpen(false);
+    };
 
     const handleEditClick = () => {
         handleEdit(row);
+        handleEditClearenceClickOpen();
     };
 
     const handleDeleteClick = () => {
@@ -91,6 +104,13 @@ function Row(props) {
                     </Collapse>
                 </TableCell>
             </TableRow>
+            <FullScreenDialog
+                dialogOpen={editClearenceDialogOpen}
+                handleClickOpen={handleEditClearenceClickOpen}
+                handleClose={handleEditClearenceClose}
+                title="Edit Clearence Record"
+                contentComponent={<AddClearenceRecord />}
+            />
         </React.Fragment>
     );
 }
