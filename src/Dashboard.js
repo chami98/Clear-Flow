@@ -272,7 +272,7 @@ export default function Dashboard() {
                 handleClickOpen={handleAddClearanceClickOpen}
                 handleClose={handleAddClearanceClose}
                 title="Add Clearence Record"
-                contentComponent={<AddClearenceRecord />}
+                contentComponent={<AddClearenceRecord action="add" />}
             />
 
             <FullScreenDialog
