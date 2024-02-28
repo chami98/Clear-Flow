@@ -23,7 +23,8 @@ import AddClearenceRecord from '../Components/AddClearenceRecord';
 function Row(props) {
     const { row, handleEdit, handleDelete } = props;
     const [open, setOpen] = useState(false);
-    const [editClearenceDialogOpen, setEditClearenceDialogOpen] = React.useState(false);
+    const [clearenceRecord, setClearenceRecord] = useState([]);
+    const [editClearenceDialogOpen, setEditClearenceDialogOpen] = useState(false);
 
     const handleEditClearenceClickOpen = () => {
         setEditClearenceDialogOpen(true);
@@ -33,8 +34,9 @@ function Row(props) {
         setEditClearenceDialogOpen(false);
     };
 
-    const handleEditClick = () => {
+    const handleEditClick = async () => {
         handleEdit(row);
+        await setClearenceRecord(row);
         handleEditClearenceClickOpen();
     };
 
@@ -109,7 +111,7 @@ function Row(props) {
                 handleClickOpen={handleEditClearenceClickOpen}
                 handleClose={handleEditClearenceClose}
                 title="Edit Clearence Record"
-                contentComponent={<AddClearenceRecord />}
+                contentComponent={<AddClearenceRecord clearenceRecord={clearenceRecord} action="edit" />}
             />
         </React.Fragment>
     );

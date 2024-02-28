@@ -6,10 +6,10 @@
     "degree": "Information Technology",
     "clearenceDetails": [
       {
-        "date": "2020-01-05",
+        "date": "2020-01-10",
         "name": "Printer",
         "description": "Offset Printer",
-        "value": 50000
+        "value": 56000
       },
       {
         "date": "2020-01-02",
@@ -29,7 +29,7 @@
         "date": "2020-01-05",
         "name": "Printer",
         "description": "Offset Printer",
-        "value": 50000
+        "value": 44000
       },
       {
         "date": "2020-01-02",
@@ -49,7 +49,7 @@
         "date": "2020-01-05",
         "name": "Printer",
         "description": "Offset Printer",
-        "value": 50000
+        "value": 55000
       },
       {
         "date": "2020-01-02",
@@ -69,7 +69,7 @@
         "date": "2020-01-05",
         "name": "Printer",
         "description": "Offset Printer",
-        "value": 50000
+        "value": 60000
       },
       {
         "date": "2020-01-02",

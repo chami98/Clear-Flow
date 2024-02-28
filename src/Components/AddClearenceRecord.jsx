@@ -13,16 +13,33 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Typography from "@mui/material/Typography";
+import dayjs from "dayjs";
 
-export default function AddClearanceRecord() {
-  const [intake, setIntake] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [registrationNumber, setRegistrationNumber] = useState("");
-  const [degree, setDegree] = useState("");
-  const [borrowedDate, setBorrowedDate] = useState(null);
-  const [itemName, setItemName] = useState("");
-  const [itemValue, setItemValue] = useState("");
-  const [itemDescription, setItemDescription] = useState("");
+export default function AddClearanceRecord({ clearenceRecord, action }) {
+  const [intake, setIntake] = useState(
+    action == "edit" ? clearenceRecord.intake : ""
+  );
+  const [fullName, setFullName] = useState(
+    action == "edit" ? clearenceRecord.fullName : ""
+  );
+  const [registrationNumber, setRegistrationNumber] = useState(
+    action == "edit" ? clearenceRecord.registrationNumber : ""
+  );
+  const [degree, setDegree] = useState(
+    action == "edit" ? clearenceRecord.degree : ""
+  );
+  const [borrowedDate, setBorrowedDate] = useState(
+    action == "edit" ? clearenceRecord.clearenceDetails[0].date : null
+  );
+  const [itemName, setItemName] = useState(
+    action == "edit" ? clearenceRecord.clearenceDetails[0].name : ""
+  );
+  const [itemValue, setItemValue] = useState(
+    action == "edit" ? clearenceRecord.clearenceDetails[0].value : ""
+  );
+  const [itemDescription, setItemDescription] = useState(
+    action == "edit" ? clearenceRecord.clearenceDetails[0].description : ""
+  );
 
   const handleIntakeChange = (event) => {
     setIntake(event.target.value);
@@ -77,9 +94,9 @@ export default function AddClearanceRecord() {
               onChange={handleIntakeChange}
             >
               <MenuItem value="Intake 38">Intake 38</MenuItem>
-              <MenuItem value="Intake 38">Intake 39</MenuItem>
-              <MenuItem value="Intake 38">Intake 40</MenuItem>
-              <MenuItem value="Intake 38">Intake 41</MenuItem>
+              <MenuItem value="Intake 39">Intake 39</MenuItem>
+              <MenuItem value="Intake 40">Intake 40</MenuItem>
+              <MenuItem value="Intake 41">Intake 41</MenuItem>
               {/* Add more intake options as needed */}
             </Select>
           </FormControl>
@@ -111,11 +128,15 @@ export default function AddClearanceRecord() {
               value={degree}
               onChange={handleDegreeChange}
             >
-              <MenuItem value="IT">Information Technology</MenuItem>
-              <MenuItem value="IS">Information Systems</MenuItem>
-              <MenuItem value="QS">Quantity Survey</MenuItem>
-              <MenuItem value="SV">Survey Science</MenuItem>
-              <MenuItem value="ARC">Architecture</MenuItem>
+              <MenuItem value="Information Technology">
+                Information Technology
+              </MenuItem>
+              <MenuItem value="Information Systems">
+                Information Systems
+              </MenuItem>
+              <MenuItem value="Quantity Survey">Quantity Survey</MenuItem>
+              <MenuItem value="Survey Science">Survey Science</MenuItem>
+              <MenuItem value="Architecture">Architecture</MenuItem>
 
               {/* Add more intake options as needed */}
             </Select>
@@ -161,7 +182,11 @@ export default function AddClearanceRecord() {
         <Grid item xs={12} sm={6}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker"]}>
-              <DatePicker label="Date" sx={{ width: "100%" }} />
+              <DatePicker
+                label="Date"
+                sx={{ width: "100%" }}
+                defaultValue={dayjs(new Date(borrowedDate))}
+              />
             </DemoContainer>
           </LocalizationProvider>
         </Grid>
