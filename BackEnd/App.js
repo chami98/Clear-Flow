@@ -1,22 +1,19 @@
-// Import necessary modules
 const express = require('express');
 const admin = require('firebase-admin');
 
-// Initialize Firebase Admin SDK with your service account key
-const serviceAccount = require('./serviceAccountKey'); // Path to your service account key file
+const serviceAccount = require('./serviceAccountKey');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
 
-// Create an Express application
+
 const app = express();
 app.use(express.json());
-const port = 5000; // Choose your desired port number
+const port = 5000;
 
-// Define a route to fetch data from Firestore
 app.get('/data', async (req, res) => {
     try {
-        const snapshot = await admin.firestore().collection('Clearences').get(); // Replace 'your_collection' with your Firestore collection name
+        const snapshot = await admin.firestore().collection('Clearences').get();
         const data = [];
         snapshot.forEach(doc => {
             data.push(doc.data());
@@ -30,7 +27,7 @@ app.get('/data', async (req, res) => {
 
 app.post('/data', async (req, res) => {
     try {
-        const newData = req.body; // Assuming the request body contains the new data
+        const newData = req.body;
         await admin.firestore().collection('Clearences').add(newData);
         res.status(201).send('Data added successfully');
     } catch (error) {
