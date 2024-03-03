@@ -20,6 +20,7 @@ import FullScreenDialog from '../FullScreenDialog';
 import AddClearenceRecord from '../Components/AddClearenceRecord';
 import axios from 'axios';
 import { Skeleton } from '@mui/material';
+import { toast } from 'react-toastify';
 
 
 function Row(props) {
@@ -143,7 +144,7 @@ function CollapsibleTable() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/data')
+        axios.get('https://us-central1-clear-flow-9e0f0.cloudfunctions.net/ClearFlow/data')
             .then(function (response) {
                 setRows(response.data);
                 setLoading(false);
@@ -166,10 +167,19 @@ function CollapsibleTable() {
     };
 
     const handleDelete = (rowToDelete) => {
-        const isConfirmed = window.confirm(`Are you sure you want to delete ${rowToDelete.fullName}?`);
+        const isConfirmed = window.confirm(`Are you sure you want to delete clearence of ${rowToDelete.fullName}?`);
         if (isConfirmed) {
-            const updatedRows = rows.filter(row => row.registrationNumber !== rowToDelete.registrationNumber);
-            setRows(updatedRows);
+            axios.delete(`https://us-central1-clear-flow-9e0f0.cloudfunctions.net/ClearFlow/data/${rowToDelete.id}`)
+                .then(response => {
+                    console.log(response.data);
+                    const updatedRows = rows.filter(row => row.id !== rowToDelete.id);
+                    setRows(updatedRows);
+                    toast.success(`Clearence for ${rowToDelete.fullName} has been successfully deleted`);
+                })
+                .catch(error => {
+                    console.error('Error deleting row:', error);
+                    toast.error(`Error deleting clearance record for ${rowToDelete.fullName}`);
+                });
         }
     };
 
