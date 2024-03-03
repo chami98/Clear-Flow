@@ -16,7 +16,9 @@ app.get('/data', async (req, res) => {
         const snapshot = await admin.firestore().collection('Clearences').get();
         const data = [];
         snapshot.forEach(doc => {
-            data.push(doc.data());
+            const documentData = doc.data();
+            documentData.id = doc.id;
+            data.push(documentData);
         });
         res.json(data);
     } catch (error) {
@@ -24,6 +26,7 @@ app.get('/data', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 app.post('/data', async (req, res) => {
     try {
@@ -35,6 +38,25 @@ app.post('/data', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+app.delete('/data/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const docRef = admin.firestore().collection('Clearences').doc(id);
+        const doc = await docRef.get();
+
+        if (!doc.exists) {
+            return res.status(404).send('Document not found');
+        }
+
+        await docRef.delete();
+        res.status(200).send('Document deleted successfully');
+    } catch (error) {
+        console.error('Error deleting document', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 
 
