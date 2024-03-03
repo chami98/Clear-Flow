@@ -39,6 +39,25 @@ app.post('/data', async (req, res) => {
     }
 });
 
+app.delete('/data/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const docRef = admin.firestore().collection('Clearences').doc(id);
+        const doc = await docRef.get();
+
+        if (!doc.exists) {
+            return res.status(404).send('Document not found');
+        }
+
+        await docRef.delete();
+        res.status(200).send('Document deleted successfully');
+    } catch (error) {
+        console.error('Error deleting document', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
 
 
 // Start the server
