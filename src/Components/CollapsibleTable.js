@@ -168,8 +168,15 @@ function CollapsibleTable() {
     const handleDelete = (rowToDelete) => {
         const isConfirmed = window.confirm(`Are you sure you want to delete ${rowToDelete.fullName}?`);
         if (isConfirmed) {
-            const updatedRows = rows.filter(row => row.registrationNumber !== rowToDelete.registrationNumber);
-            setRows(updatedRows);
+            axios.delete(`http://localhost:5000/data/${rowToDelete.id}`)
+                .then(response => {
+                    console.log(response.data);
+                    const updatedRows = rows.filter(row => row.id !== rowToDelete.id);
+                    setRows(updatedRows);
+                })
+                .catch(error => {
+                    console.error('Error deleting row:', error);
+                });
         }
     };
 
