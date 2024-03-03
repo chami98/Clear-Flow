@@ -16,7 +16,9 @@ app.get('/data', async (req, res) => {
         const snapshot = await admin.firestore().collection('Clearences').get();
         const data = [];
         snapshot.forEach(doc => {
-            data.push(doc.data());
+            const documentData = doc.data();
+            documentData.id = doc.id;
+            data.push(documentData);
         });
         res.json(data);
     } catch (error) {
@@ -24,6 +26,7 @@ app.get('/data', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 app.post('/data', async (req, res) => {
     try {
