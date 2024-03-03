@@ -1,12 +1,15 @@
 const express = require('express');
 const admin = require('firebase-admin');
 const serviceAccount = require('./serviceAccountKey');
+const cors = require('cors');
+
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.get('/data', async (req, res) => {
     try {
@@ -51,6 +54,13 @@ app.delete('/data/:id', async (req, res) => {
         console.error('Error deleting document', error);
         res.status(500).send('Internal Server Error');
     }
+});
+
+// Specify the port to listen on
+const PORT = process.env.PORT || 5000; // Use the environment port or 3000 if not specified
+
+app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
 });
 
 module.exports = app;
