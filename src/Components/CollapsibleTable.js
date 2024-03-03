@@ -18,6 +18,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import data from './data.json';
 import FullScreenDialog from '../FullScreenDialog';
 import AddClearenceRecord from '../Components/AddClearenceRecord';
+import axios from 'axios';
+import { Skeleton } from '@mui/material';
 
 
 function Row(props) {
@@ -138,9 +140,19 @@ Row.propTypes = {
 
 function CollapsibleTable() {
     const [rows, setRows] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setRows(data);
+        axios.get('http://localhost:5000/data')
+            .then(function (response) {
+                setRows(response.data);
+                setLoading(false);
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                console.error(error);
+                setLoading(false);
+            });
     }, []);
 
     const handleEdit = (editedRow) => {
@@ -160,6 +172,63 @@ function CollapsibleTable() {
             setRows(updatedRows);
         }
     };
+
+    if (loading) {
+        // Render skeleton while data is loading
+        return (
+            <TableContainer component={Paper}>
+                <Table aria-label="collapsible table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell />
+                            <TableCell>Full Name</TableCell>
+                            <TableCell align="right">Registration Number</TableCell>
+                            <TableCell align="right">Intake</TableCell>
+                            <TableCell align="right">Degree</TableCell>
+                            <TableCell align="right">Actions</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell colSpan={6}>
+                                <Skeleton variant="rounded" height={50} animation="wave" />
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell colSpan={6}>
+                                <Skeleton variant="rounded" height={50} animation="wave" />
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell colSpan={6}>
+                                <Skeleton variant="rounded" height={50} animation="wave" />
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell colSpan={6}>
+                                <Skeleton variant="rounded" height={50} animation="wave" />
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell colSpan={6}>
+                                <Skeleton variant="rounded" height={50} animation="wave" />
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell colSpan={6}>
+                                <Skeleton variant="rounded" height={50} animation="wave" />
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell colSpan={6}>
+                                <Skeleton variant="rounded" height={50} animation="wave" />
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        );
+    }
 
     return (
         <TableContainer component={Paper}>
