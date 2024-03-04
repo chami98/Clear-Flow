@@ -36,6 +36,27 @@ app.post('/data', async (req, res) => {
     }
 });
 
+app.put('/data/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const updatedData = req.body;
+
+        const docRef = admin.firestore().collection('Clearences').doc(id);
+        const doc = await docRef.get();
+
+        if (!doc.exists) {
+            return res.status(404).send('Document not found');
+        }
+
+        await docRef.update(updatedData);
+
+        res.status(200).send('Document updated successfully');
+    } catch (error) {
+        console.error('Error updating document', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 app.delete('/data/:id', async (req, res) => {
     try {
         const id = req.params.id;
