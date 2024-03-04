@@ -97,8 +97,6 @@ export default function Dashboard() {
     };
 
     const [addClearencedialogOpen, setAddClearenceDialogOpen] = React.useState(false);
-    const [removeClearencedialogOpen, setRemoveClearenceDialogOpen] = React.useState(false);
-    const [updateClearencedialogOpen, setUpdateClearenceDialogOpen] = React.useState(false);
     const [viewClearencedialogOpen, setViewClearenceDialogOpen] = React.useState(false);
 
     const handleAddClearanceClickOpen = () => {
@@ -107,22 +105,6 @@ export default function Dashboard() {
 
     const handleAddClearanceClose = () => {
         setAddClearenceDialogOpen(false);
-    };
-
-    const handleRemoveClearanceClickOpen = () => {
-        setRemoveClearenceDialogOpen(true)
-    };
-
-    const handleRemoveClearanceClose = () => {
-        setRemoveClearenceDialogOpen(false)
-    };
-
-    const handleUpdateClearanceClickOpen = () => {
-        setUpdateClearenceDialogOpen(true)
-    };
-
-    const handleUpdateClearanceClose = () => {
-        setUpdateClearenceDialogOpen(false)
     };
 
     const handleViewClearanceClickOpen = () => {
