@@ -114,7 +114,7 @@ function Row(props) {
                 handleClickOpen={handleEditClearenceClickOpen}
                 handleClose={handleEditClearenceClose}
                 title="Edit Clearence Record"
-                contentComponent={<AddClearenceRecord clearenceRecord={clearenceRecord} action="edit" />}
+                contentComponent={<AddClearenceRecord clearenceRecord={clearenceRecord} action="edit" handleUpdatedCount={props.handleUpdatedCount} />}
             />
         </React.Fragment>
     );
@@ -142,6 +142,11 @@ Row.propTypes = {
 function CollapsibleTable() {
     const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [updatedCount, setUpdatedCount] = useState(0);
+
+    const handleUpdatedCount = () => {
+        setUpdatedCount(updatedCount + 1)
+    }
 
     useEffect(() => {
         axios.get('https://us-central1-clear-flow-9e0f0.cloudfunctions.net/ClearFlow/data')
@@ -154,7 +159,7 @@ function CollapsibleTable() {
                 console.error(error);
                 setLoading(false);
             });
-    }, []);
+    }, [updatedCount]);
 
     const handleEdit = (editedRow) => {
         const updatedRows = rows.map(row => {
@@ -255,7 +260,7 @@ function CollapsibleTable() {
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
-                        <Row key={row.fullName} row={row} handleEdit={handleEdit} handleDelete={handleDelete} />
+                        <Row key={row.fullName} row={row} handleEdit={handleEdit} handleDelete={handleDelete} handleUpdatedCount={handleUpdatedCount} />
                     ))}
                 </TableBody>
             </Table>

@@ -18,7 +18,11 @@ import dayjs from "dayjs";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export default function AddClearanceRecord({ clearenceRecord, action }) {
+export default function AddClearanceRecord({
+  clearenceRecord,
+  action,
+  handleUpdatedCount,
+}) {
   const [intake, setIntake] = useState(
     action == "edit" ? clearenceRecord.intake : ""
   );
@@ -119,6 +123,7 @@ export default function AddClearanceRecord({ clearenceRecord, action }) {
           toast.success("New clearance record created successfully.");
         } else {
           toast.success("Clearance record updated successfully.");
+          handleUpdatedCount();
         }
       })
       .catch((error) => {
