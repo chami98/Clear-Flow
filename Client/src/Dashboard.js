@@ -280,7 +280,7 @@ export default function Dashboard() {
                 handleClickOpen={handleViewClearanceClickOpen}
                 handleClose={handleViewClearanceClose}
                 title="View Clearance Records"
-                contentComponent={<CollapsibleTable />}
+                contentComponent={<CollapsibleTable place="Publication" />}
             />
 
         </ThemeProvider>

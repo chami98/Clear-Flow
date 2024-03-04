@@ -7,6 +7,7 @@ import {
   Select,
   Grid,
   Box,
+  Button,
 } from "@mui/material";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -14,6 +15,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Typography from "@mui/material/Typography";
 import dayjs from "dayjs";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function AddClearanceRecord({ clearenceRecord, action }) {
   const [intake, setIntake] = useState(
@@ -28,8 +31,10 @@ export default function AddClearanceRecord({ clearenceRecord, action }) {
   const [degree, setDegree] = useState(
     action == "edit" ? clearenceRecord.degree : ""
   );
-  const [borrowedDate, setBorrowedDate] = useState(
-    action == "edit" ? clearenceRecord.clearenceDetails[0].date : null
+  const [date, setDate] = useState(
+    action == "edit"
+      ? clearenceRecord.clearenceDetails[0].date
+      : dayjs().format("YYYY-MM-DD")
   );
   const [itemName, setItemName] = useState(
     action == "edit" ? clearenceRecord.clearenceDetails[0].name : ""
@@ -57,8 +62,8 @@ export default function AddClearanceRecord({ clearenceRecord, action }) {
     setRegistrationNumber(event.target.value);
   };
 
-  const handleBorrowedDateChange = (date) => {
-    setBorrowedDate(date);
+  const handleDateChange = (date) => {
+    setDate(date);
   };
 
   const handleItemNameChange = (event) => {
@@ -73,11 +78,58 @@ export default function AddClearanceRecord({ clearenceRecord, action }) {
   };
 
   const handleSubmit = () => {
-    // Handle form submission
+    if (
+      !intake ||
+      !fullName ||
+      !registrationNumber ||
+      !degree ||
+      !date ||
+      !itemName ||
+      !itemValue ||
+      !itemDescription
+    ) {
+      toast.error("Please fill out all fields.");
+      return;
+    }
+    const formData = {
+      intake,
+      fullName,
+      registrationNumber,
+      degree,
+      clearenceDetails: [
+        {
+          date: dayjs(date).format("YYYY-MM-DD"),
+          name: itemName,
+          value: itemValue,
+          description: itemDescription,
+        },
+      ],
+    };
+
+    const httpMethod = action === "edit" ? "put" : "post";
+
+    const url =
+      action === "edit"
+        ? `https://us-central1-clear-flow-9e0f0.cloudfunctions.net/ClearFlow/data/${clearenceRecord.id}`
+        : "https://us-central1-clear-flow-9e0f0.cloudfunctions.net/ClearFlow/data";
+
+    axios[httpMethod](url, formData)
+      .then((response) => {
+        if (httpMethod === "post") {
+          toast.success("New clearance record created successfully.");
+        } else {
+          toast.success("Clearance record updated successfully.");
+        }
+      })
+      .catch((error) => {
+        toast.error("Error sending data");
+        console.error("Error sending data", error);
+      });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <>
+      {" "}
       <Box sx={{ paddingTop: "20px", paddingLeft: "20px" }}>
         <Typography variant="h6" component="h6">
           Student Details
@@ -185,12 +237,20 @@ export default function AddClearanceRecord({ clearenceRecord, action }) {
               <DatePicker
                 label="Date"
                 sx={{ width: "100%" }}
-                defaultValue={dayjs(new Date(borrowedDate))}
+                defaultValue={dayjs(new Date(date))}
+                onChange={handleDateChange}
               />
             </DemoContainer>
           </LocalizationProvider>
         </Grid>
+        <Grid item xs={12} sm={12}>
+          <Box sx={{ textAlign: "center" }}>
+            <Button variant="contained" onClick={handleSubmit} fullWidth>
+              Submit
+            </Button>
+          </Box>
+        </Grid>
       </Grid>
-    </form>
+    </>
   );
 }
