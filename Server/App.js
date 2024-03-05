@@ -27,6 +27,31 @@ app.get('/data', async (req, res) => {
     }
 });
 
+app.get('/data/:place', async (req, res) => {
+
+    const place = req.params.place.toLowerCase();
+    console.log(place)
+
+    try {
+        const snapshot = await admin.firestore().collection('Clearences').get();
+        const data = [];
+
+        snapshot.forEach(doc => {
+            const documentData = doc.data();
+            documentData.id = doc.id;
+            if (documentData.clearenceDetails.some(detail => detail.place.toLowerCase() === place)) {
+                data.push(documentData);
+            }
+        });
+
+        res.json(data);
+    } catch (error) {
+        console.error('Error getting documents', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
 app.post('/data', async (req, res) => {
     try {
         const newData = req.body;
