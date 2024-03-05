@@ -192,15 +192,18 @@ export default function Dashboard({ titlePlace }) {
                     }}
                 >
                     <Toolbar />
-                    <Box textAlign="center" sx={{ marginTop: "10px", marginBottom: "-70px" }} >
+                    <Box textAlign="center" sx={{ marginTop: "10px" }} >
                         <Typography variant="h3" component="h3" sx={{ fontFamily: 'Marhely, sans-serif' }}>
                             {titlePlace}
                         </Typography>
                     </Box>
 
 
-                    <Grid container justifyContent="center" alignItems="center" spacing={2} sx={{ height: '100vh' }}>
-                        <Grid item xs={12} md={5} style={{ height: '28vw' }}>
+                    <Grid container justifyContent="center" alignItems="center" spacing={1} sx={{
+                        height: '100vh',
+
+                    }}>
+                        <Grid item xs={12} md={5} style={{ height: isMediumScreen ? '24vw' : '30vh' }}>
                             <div
                                 style={{
                                     display: 'flex',
@@ -208,7 +211,7 @@ export default function Dashboard({ titlePlace }) {
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     padding: '10px 20px',
-                                    borderRadius: '8px',
+                                    borderTopLeftRadius: '100px',
                                     cursor: 'pointer',
                                     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                                     backgroundColor: '#2196f3', // Primary button color
@@ -225,7 +228,7 @@ export default function Dashboard({ titlePlace }) {
                         </Grid>
 
 
-                        <Grid item xs={12} md={5} style={{ height: '28vw' }}>
+                        <Grid item xs={12} md={5} style={{ height: isMediumScreen ? '24vw' : '30vh' }}>
                             <div
                                 style={{
                                     display: 'flex',
@@ -233,7 +236,7 @@ export default function Dashboard({ titlePlace }) {
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     padding: '10px 20px',
-                                    borderRadius: '8px',
+                                    borderBottomRightRadius: '100px',
                                     cursor: 'pointer',
                                     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                                     backgroundColor: '#ff9800', // Warning button color
