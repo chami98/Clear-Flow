@@ -24,7 +24,7 @@ import { toast } from 'react-toastify';
 
 
 function Row(props) {
-    const { row, handleEdit, handleDelete } = props;
+    const { row, handleEdit, handleDelete, place } = props;
     const [open, setOpen] = useState(false);
     const [clearenceRecord, setClearenceRecord] = useState([]);
     const [editClearenceDialogOpen, setEditClearenceDialogOpen] = useState(false);
@@ -114,7 +114,7 @@ function Row(props) {
                 handleClickOpen={handleEditClearenceClickOpen}
                 handleClose={handleEditClearenceClose}
                 title="Edit Clearence Record"
-                contentComponent={<AddClearenceRecord clearenceRecord={clearenceRecord} action="edit" handleUpdatedCount={props.handleUpdatedCount} />}
+                contentComponent={<AddClearenceRecord clearenceRecord={clearenceRecord} action="edit" handleUpdatedCount={props.handleUpdatedCount} place={place} />}
             />
         </React.Fragment>
     );
@@ -139,7 +139,7 @@ Row.propTypes = {
     handleDelete: PropTypes.func.isRequired,
 };
 
-function CollapsibleTable() {
+function CollapsibleTable({ place }) {
     const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(true);
     const [updatedCount, setUpdatedCount] = useState(0);
@@ -260,7 +260,7 @@ function CollapsibleTable() {
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
-                        <Row key={row.fullName} row={row} handleEdit={handleEdit} handleDelete={handleDelete} handleUpdatedCount={handleUpdatedCount} />
+                        <Row key={row.fullName} row={row} handleEdit={handleEdit} handleDelete={handleDelete} handleUpdatedCount={handleUpdatedCount} place={place} />
                     ))}
                 </TableBody>
             </Table>

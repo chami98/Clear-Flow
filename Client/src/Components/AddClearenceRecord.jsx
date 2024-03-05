@@ -22,6 +22,7 @@ export default function AddClearanceRecord({
   clearenceRecord,
   action,
   handleUpdatedCount,
+  place,
 }) {
   const [intake, setIntake] = useState(
     action == "edit" ? clearenceRecord.intake : ""
@@ -106,6 +107,7 @@ export default function AddClearanceRecord({
           name: itemName,
           value: itemValue,
           description: itemDescription,
+          place,
         },
       ],
     };

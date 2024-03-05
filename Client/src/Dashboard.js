@@ -90,7 +90,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
+export default function Dashboard({ titlePlace }) {
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
@@ -192,7 +192,7 @@ export default function Dashboard() {
                     <Toolbar />
                     <Box textAlign="center" sx={{ marginTop: "10px" }} >
                         <Typography variant="h3" component="h1">
-                            Publication
+                            {titlePlace}
                         </Typography>
                     </Box>
                     <Grid container justifyContent="center" alignItems="center" sx={{ gap: 2, height: '100vh' }}>
@@ -254,7 +254,7 @@ export default function Dashboard() {
                 handleClickOpen={handleAddClearanceClickOpen}
                 handleClose={handleAddClearanceClose}
                 title="Add Clearence Record"
-                contentComponent={<AddClearenceRecord action="add" />}
+                contentComponent={<AddClearenceRecord action="add" place={titlePlace} />}
             />
 
             <FullScreenDialog
@@ -262,7 +262,7 @@ export default function Dashboard() {
                 handleClickOpen={handleViewClearanceClickOpen}
                 handleClose={handleViewClearanceClose}
                 title="View Clearance Records"
-                contentComponent={<CollapsibleTable place="Publication" />}
+                contentComponent={<CollapsibleTable place={titlePlace} />}
             />
 
         </ThemeProvider>
