@@ -149,7 +149,7 @@ function CollapsibleTable({ place }) {
     }
 
     useEffect(() => {
-        axios.get('https://us-central1-clear-flow-9e0f0.cloudfunctions.net/ClearFlow/data')
+        axios.get(`https://us-central1-clear-flow-9e0f0.cloudfunctions.net/ClearFlow/data/${place}`)
             .then(function (response) {
                 setRows(response.data);
                 setLoading(false);
