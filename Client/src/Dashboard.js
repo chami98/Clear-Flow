@@ -26,6 +26,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FullScreenDialog from './FullScreenDialog';
 import AddClearenceRecord from './Components/AddClearenceRecord';
 import CollapsibleTable from './Components/CollapsibleTable';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 
 function Copyright(props) {
@@ -87,8 +89,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
+
 
 export default function Dashboard({ titlePlace }) {
     const [open, setOpen] = React.useState(false);
@@ -115,8 +117,8 @@ export default function Dashboard({ titlePlace }) {
         setViewClearenceDialogOpen(false)
     };
 
-
-
+    const theme = useTheme();
+    const isMediumScreen = useMediaQuery(theme.breakpoints.up('md'));
     return (
         <ThemeProvider theme={defaultTheme}>
             <Box sx={{ display: 'flex' }}>
@@ -190,13 +192,15 @@ export default function Dashboard({ titlePlace }) {
                     }}
                 >
                     <Toolbar />
-                    <Box textAlign="center" sx={{ marginTop: "10px" }} >
-                        <Typography variant="h3" component="h1">
+                    <Box textAlign="center" sx={{ marginTop: "10px", marginBottom: "-70px" }} >
+                        <Typography variant="h3" component="h3" sx={{ fontFamily: 'Marhely, sans-serif' }}>
                             {titlePlace}
                         </Typography>
                     </Box>
-                    <Grid container justifyContent="center" alignItems="center" sx={{ gap: 2, height: '100vh' }}>
-                        <Grid item xs={12} md={5} lg={5} style={{ height: '28vw' }}>
+
+
+                    <Grid container justifyContent="center" alignItems="center" spacing={2} sx={{ height: '100vh' }}>
+                        <Grid item xs={12} md={5} style={{ height: '28vw' }}>
                             <div
                                 style={{
                                     display: 'flex',
@@ -215,13 +219,13 @@ export default function Dashboard({ titlePlace }) {
                                 }}
                                 onClick={handleAddClearanceClickOpen}
                             >
-                                <AddIcon style={{ fill: 'white', width: '110px', height: '110px' }} />
-                                <span style={{ marginLeft: '10px', fontSize: '35px' }}>Add Clearance Record</span>
+                                <AddIcon style={{ fill: 'white', width: isMediumScreen ? '110px' : '70px', height: isMediumScreen ? '110px' : '70px' }} />
+                                <span style={{ marginLeft: '10px', fontSize: isMediumScreen ? '35px' : '20px' }}>Add Clearance Record</span>
                             </div>
                         </Grid>
 
 
-                        <Grid item xs={12} md={5} lg={5} style={{ height: '28vw' }}>
+                        <Grid item xs={12} md={5} style={{ height: '28vw' }}>
                             <div
                                 style={{
                                     display: 'flex',
@@ -239,10 +243,9 @@ export default function Dashboard({ titlePlace }) {
                                     textAlign: 'center', // Center text
                                 }}
                                 onClick={handleViewClearanceClickOpen}
-
                             >
-                                <ViewListIcon style={{ fill: 'white', width: '110px', height: '110px' }} />
-                                <span style={{ marginLeft: '10px', fontSize: '35px' }}>View Clearance Records</span>
+                                <ViewListIcon style={{ fill: 'white', width: isMediumScreen ? '110px' : '70px', height: isMediumScreen ? '110px' : '70px' }} />
+                                <span style={{ marginLeft: '10px', fontSize: isMediumScreen ? '35px' : '20px' }}>View Clearance Records</span>
                             </div>
                         </Grid>
                     </Grid>
