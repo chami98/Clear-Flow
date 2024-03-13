@@ -1,3 +1,5 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import ComboBox from './ComboBox';
@@ -9,10 +11,15 @@ import SignInSide from './Pages/SignInSide';
 function App() {
   return (
     <>
-      <Dashboard titlePlace="Publication" />
-      {/* <SignInSide /> */}
-      <ToastContainer />
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Dashboard />} />
+          <Route path="/signin" element={<SignInSide />} />
+        </Routes>
+        <ToastContainer />
+      </Router>
     </>
+
   );
 }
 
