@@ -103,6 +103,51 @@ app.delete('/data/:id', async (req, res) => {
     }
 });
 
+app.post('/signup', async (req, res) => {
+    try {
+        const { email, password, displayName, worksAt } = req.body;
+
+        // Create user with email, password, and custom field
+        const userRecord = await admin.auth().createUser({
+            email,
+            password,
+            displayName,
+            // Custom field
+            worksAt
+        });
+
+        // User created successfully, return user data
+        res.json({
+            uid: userRecord.uid,
+            email: userRecord.email,
+            displayName: userRecord.displayName,
+            // Custom field
+            worksAt,
+            // Add any other user data you want to return
+        });
+    } catch (error) {
+        console.error('Error signing up:', error.message);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+app.get('/getUserByEmail', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const userRecord = await admin.auth().getUserByEmail(email);
+
+        res.json({
+            uid: userRecord.uid,
+            email: userRecord.email,
+            displayName: userRecord.displayName
+        });
+    } catch (error) {
+        console.error('Error signing in:', error.message);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+
 // Specify the port to listen on
 const PORT = process.env.PORT || 5000; // Use the environment port or 3000 if not specified
 
