@@ -5,7 +5,6 @@ import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -28,6 +27,11 @@ import AddClearenceRecord from './Components/AddClearenceRecord';
 import CollapsibleTable from './Components/CollapsibleTable';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+import firebaseConfig from './firebaseConfig';
+firebase.initializeApp(firebaseConfig);
 
 
 function Copyright(props) {
@@ -92,7 +96,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const defaultTheme = createTheme();
 
 
-export default function Dashboard({ titlePlace }) {
+export default function Dashboard({ titlePlace, setAuthenticated }) {
     const [open, setOpen] = React.useState(false);
     const toggleDrawer = () => {
         setOpen(!open);
@@ -117,6 +121,19 @@ export default function Dashboard({ titlePlace }) {
         setViewClearenceDialogOpen(false)
     };
 
+    const handleLogout = () => {
+        // Sign out user from Firebase
+        firebase.auth()
+            .signOut()
+            .then(() => {
+                console.log('User signed out successfully');
+                localStorage.removeItem('isAuthenticated');
+                setAuthenticated(false)
+            })
+            .catch((error) => {
+                console.error('Error signing out:', error.message);
+            });
+    };
     const theme = useTheme();
     const isMediumScreen = useMediaQuery(theme.breakpoints.up('md'));
     return (
@@ -143,6 +160,7 @@ export default function Dashboard({ titlePlace }) {
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
+                        <Button color="inherit" onClick={handleLogout}>Logout</Button>
                     </Toolbar>
                 </AppBar>
                 <Box
@@ -227,7 +245,7 @@ export default function Dashboard({ titlePlace }) {
                 dialogOpen={addClearencedialogOpen}
                 handleClickOpen={handleAddClearanceClickOpen}
                 handleClose={handleAddClearanceClose}
-                title="Add Clearence Record"
+                title="Add Clearance Record"
                 contentComponent={<AddClearenceRecord action="add" place={titlePlace} />}
             />
 

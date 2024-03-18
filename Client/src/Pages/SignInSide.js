@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +12,8 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toastify
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -20,6 +22,21 @@ import firebaseConfig from '../firebaseConfig';
 firebase.initializeApp(firebaseConfig);
 
 function SignInSide({ setAuthenticated }) {
+    const [rememberMe, setRememberMe] = useState(false); // State to track "Remember Me" checkbox
+    const [email, setEmail] = useState(''); // State to store email input value
+    const [password, setPassword] = useState(''); // State to store password input value
+
+    useEffect(() => {
+        const storedEmail = localStorage.getItem('rememberedEmail');
+        const storedPassword = localStorage.getItem('rememberedPassword');
+
+        if (storedEmail && storedPassword) {
+            setEmail(storedEmail);
+            setPassword(storedPassword);
+            setRememberMe(true);
+        }
+    }, []); // Runs only once on component mount
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -31,8 +48,18 @@ function SignInSide({ setAuthenticated }) {
             console.log("Signed in successfully!");
             setAuthenticated(true)
             localStorage.setItem('isAuthenticated', 'true');
+
+            // Save email and password if "Remember Me" is checked
+            if (rememberMe) {
+                localStorage.setItem('rememberedEmail', email);
+                localStorage.setItem('rememberedPassword', password);
+            } else {
+                localStorage.removeItem('rememberedEmail');
+                localStorage.removeItem('rememberedPassword');
+            }
         } catch (error) {
             console.error("Error signing in:", error.message);
+            toast.error(error.message); // Display error message as a toast
         }
     };
 
@@ -83,6 +110,8 @@ function SignInSide({ setAuthenticated }) {
                                 name="email"
                                 autoComplete="email"
                                 autoFocus
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                             <TextField
                                 margin="normal"
@@ -93,9 +122,11 @@ function SignInSide({ setAuthenticated }) {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                             <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
+                                control={<Checkbox checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} color="primary" />}
                                 label="Remember me"
                             />
                             <Button
@@ -122,6 +153,7 @@ function SignInSide({ setAuthenticated }) {
                     </Box>
                 </Grid>
             </Grid>
+            <ToastContainer />
         </ThemeProvider>
     );
 }
