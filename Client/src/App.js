@@ -9,7 +9,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import SignInSide from './Pages/SignInSide';
 
 function App() {
-  const [authenticated, setAuthenticated] = useState(false);
+  // Initialize authenticated state with the value retrieved from localStorage or default to false
+  const [authenticated, setAuthenticated] = useState(localStorage.getItem('isAuthenticated') === 'true');
+
+  useEffect(() => {
+    // Update the authentication state in localStorage whenever it changes
+    localStorage.setItem('isAuthenticated', authenticated);
+  }, [authenticated]); // Dependency array ensures this effect runs when authenticated state changes
+
   return (
     <>
       <Router>

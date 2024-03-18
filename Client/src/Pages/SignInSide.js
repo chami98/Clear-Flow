@@ -30,6 +30,7 @@ function SignInSide({ setAuthenticated }) {
             await firebase.auth().signInWithEmailAndPassword(email, password);
             console.log("Signed in successfully!");
             setAuthenticated(true)
+            localStorage.setItem('isAuthenticated', 'true');
         } catch (error) {
             console.error("Error signing in:", error.message);
         }
