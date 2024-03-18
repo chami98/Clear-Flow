@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +12,8 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toastify
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -33,6 +35,7 @@ function SignInSide({ setAuthenticated }) {
             localStorage.setItem('isAuthenticated', 'true');
         } catch (error) {
             console.error("Error signing in:", error.message);
+            toast.error(error.message); // Display error message as a toast
         }
     };
 
@@ -122,6 +125,7 @@ function SignInSide({ setAuthenticated }) {
                     </Box>
                 </Grid>
             </Grid>
+            <ToastContainer />
         </ThemeProvider>
     );
 }
