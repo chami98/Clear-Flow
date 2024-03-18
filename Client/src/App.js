@@ -24,7 +24,7 @@ function App() {
           <Route
             exact
             path="/"
-            element={authenticated ? <Dashboard titlePlace="Publication" /> : <Navigate to="/signin" />}
+            element={authenticated ? <Dashboard titlePlace="Publication" setAuthenticated={setAuthenticated} /> : <Navigate to="/signin" />}
           />
           <Route
             path="/signin"
