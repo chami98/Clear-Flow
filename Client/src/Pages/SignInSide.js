@@ -12,36 +12,31 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+import firebaseConfig from '../firebaseConfig';
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://chami98.github.io/Clear-Flow/">
-                ClearFlow
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+firebase.initializeApp(firebaseConfig);
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
-
-export default function SignInSide() {
-    const handleSubmit = (event) => {
+function SignInSide({ setAuthenticated }) {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        const email = data.get('email');
+        const password = data.get('password');
+        try {
+            // Sign in with email and password
+            await firebase.auth().signInWithEmailAndPassword(email, password);
+            console.log("Signed in successfully!");
+            setAuthenticated(true)
+        } catch (error) {
+            console.error("Error signing in:", error.message);
+        }
     };
 
     return (
-        <ThemeProvider theme={defaultTheme}>
+        <ThemeProvider theme={createTheme()}>
             <Grid container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
                 <Grid
@@ -122,7 +117,6 @@ export default function SignInSide() {
                                     </Link>
                                 </Grid>
                             </Grid>
-                            <Copyright sx={{ mt: 5 }} />
                         </Box>
                     </Box>
                 </Grid>
@@ -130,3 +124,5 @@ export default function SignInSide() {
         </ThemeProvider>
     );
 }
+
+export default SignInSide;

@@ -10,14 +10,6 @@ import SignInSide from './Pages/SignInSide';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // Your authentication logic here
-    // For demonstration purposes, I'm using a simple local storage check
-    const isAuthenticated = true;
-    setAuthenticated(isAuthenticated);
-  }, []);
-
   return (
     <>
       <Router>
@@ -29,7 +21,7 @@ function App() {
           />
           <Route
             path="/signin"
-            element={!authenticated ? <SignInSide /> : <Navigate to="/" />}
+            element={!authenticated ? <SignInSide setAuthenticated={setAuthenticated} /> : <Navigate to="/" />}
           />
         </Routes>
         <ToastContainer />
