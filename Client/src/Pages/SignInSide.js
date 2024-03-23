@@ -21,7 +21,7 @@ import firebaseConfig from '../firebaseConfig';
 
 firebase.initializeApp(firebaseConfig);
 
-function SignInSide({ setAuthenticated }) {
+function SignInSide({ setAuthenticated, setWorksAt }) {
     const [rememberMe, setRememberMe] = useState(false); // State to track "Remember Me" checkbox
     const [email, setEmail] = useState(''); // State to store email input value
     const [password, setPassword] = useState(''); // State to store password input value
@@ -43,13 +43,20 @@ function SignInSide({ setAuthenticated }) {
         const email = data.get('email');
         const password = data.get('password');
         try {
-            // Sign in with email and password
-            await firebase.auth().signInWithEmailAndPassword(email, password);
-            console.log("Signed in successfully!");
-            setAuthenticated(true)
-            localStorage.setItem('isAuthenticated', 'true');
+            const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+            const userDoc = await firebase.firestore().collection('users').doc(userCredential.user.uid).get();
+            if (userDoc.exists) {
+                const userData = userDoc.data();
+                console.log("Signed in successfully!", userData);
+                setAuthenticated(true);
+                localStorage.setItem('isAuthenticated', 'true');
+                const worksAt = userData.worksAt;
+                console.log("worksAt:", worksAt);
+                setWorksAt(worksAt)
+            } else {
+                console.error("User data not found.");
+            }
 
-            // Save email and password if "Remember Me" is checked
             if (rememberMe) {
                 localStorage.setItem('rememberedEmail', email);
                 localStorage.setItem('rememberedPassword', password);
@@ -62,6 +69,7 @@ function SignInSide({ setAuthenticated }) {
             toast.error(error.message); // Display error message as a toast
         }
     };
+
 
     return (
         <ThemeProvider theme={createTheme()}>

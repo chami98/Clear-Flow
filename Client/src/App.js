@@ -11,6 +11,7 @@ import SignInSide from './Pages/SignInSide';
 function App() {
   // Initialize authenticated state with the value retrieved from localStorage or default to false
   const [authenticated, setAuthenticated] = useState(localStorage.getItem('isAuthenticated') === 'true');
+  const [worksAt, setWorksAt] = useState("");
 
   useEffect(() => {
     // Update the authentication state in localStorage whenever it changes
@@ -24,11 +25,11 @@ function App() {
           <Route
             exact
             path="/"
-            element={authenticated ? <Dashboard titlePlace="Publication" setAuthenticated={setAuthenticated} /> : <Navigate to="/signin" />}
+            element={authenticated ? <Dashboard titlePlace={worksAt} setAuthenticated={setAuthenticated} /> : <Navigate to="/signin" />}
           />
           <Route
             path="/signin"
-            element={!authenticated ? <SignInSide setAuthenticated={setAuthenticated} /> : <Navigate to="/" />}
+            element={!authenticated ? <SignInSide setAuthenticated={setAuthenticated} setWorksAt={setWorksAt} /> : <Navigate to="/" />}
           />
         </Routes>
         <ToastContainer />
