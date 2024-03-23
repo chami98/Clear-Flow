@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import CircularProgress from '@mui/material/CircularProgress'; // Import CircularProgress from Material-UI
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,13 +19,15 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import firebaseConfig from '../firebaseConfig';
+import Backdrop from '@mui/material/Backdrop';
 
 firebase.initializeApp(firebaseConfig);
 
 function SignInSide({ setAuthenticated, setWorksAt }) {
-    const [rememberMe, setRememberMe] = useState(false); // State to track "Remember Me" checkbox
-    const [email, setEmail] = useState(''); // State to store email input value
-    const [password, setPassword] = useState(''); // State to store password input value
+    const [loading, setLoading] = useState(false); // State to track loading state
+    const [rememberMe, setRememberMe] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     useEffect(() => {
         const storedEmail = localStorage.getItem('rememberedEmail');
@@ -35,13 +38,16 @@ function SignInSide({ setAuthenticated, setWorksAt }) {
             setPassword(storedPassword);
             setRememberMe(true);
         }
-    }, []); // Runs only once on component mount
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true); // Start loading
+
         const data = new FormData(event.currentTarget);
         const email = data.get('email');
         const password = data.get('password');
+
         try {
             const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
             const userDoc = await firebase.firestore().collection('users').doc(userCredential.user.uid).get();
@@ -67,9 +73,10 @@ function SignInSide({ setAuthenticated, setWorksAt }) {
         } catch (error) {
             console.error("Error signing in:", error.message);
             toast.error(error.message); // Display error message as a toast
+        } finally {
+            setLoading(false); // Stop loading
         }
     };
-
 
     return (
         <ThemeProvider theme={createTheme()}>
@@ -142,9 +149,20 @@ function SignInSide({ setAuthenticated, setWorksAt }) {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
+                                disabled={loading} // Disable button when loading
                             >
                                 Sign In
                             </Button>
+                            <Backdrop
+                                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                open={loading} // Show backdrop when loading
+                                onClick={() => setLoading(false)} // Allow user to cancel loading by clicking on backdrop
+                            >
+                                <CircularProgress color="inherit" />
+                                <Typography variant="h6" color="inherit" component="div" sx={{ ml: 2 }}>
+                                    Signing in...
+                                </Typography>
+                            </Backdrop>
                         </Box>
                     </Box>
                 </Grid>
@@ -155,3 +173,4 @@ function SignInSide({ setAuthenticated, setWorksAt }) {
 }
 
 export default SignInSide;
+
