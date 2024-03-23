@@ -103,23 +103,24 @@ app.post('/signup', async (req, res) => {
     try {
         const { email, password, displayName, worksAt } = req.body;
 
-        // Create user with email, password, and custom field
         const userRecord = await admin.auth().createUser({
             email,
             password,
-            displayName,
-            // Custom field
+            displayName
+        });
+
+        await admin.firestore().collection('users').doc(userRecord.uid).set({
+            uid: userRecord.uid,
+            email: userRecord.email,
+            displayName: userRecord.displayName,
             worksAt
         });
 
-        // User created successfully, return user data
         res.json({
             uid: userRecord.uid,
             email: userRecord.email,
             displayName: userRecord.displayName,
-            // Custom field
-            worksAt,
-            // Add any other user data you want to return
+            worksAt
         });
     } catch (error) {
         console.error('Error signing up:', error.message);
