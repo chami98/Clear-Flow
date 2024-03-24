@@ -23,6 +23,7 @@ import UpdateIcon from '@mui/icons-material/Update';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FullScreenDialog from './FullScreenDialog';
+import LogoutIcon from '@mui/icons-material/Logout';
 import AddClearenceRecord from './Components/AddClearenceRecord';
 import CollapsibleTable from './Components/CollapsibleTable';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -155,7 +156,9 @@ export default function Dashboard({ titlePlace, setAuthenticated }) {
                         >
                             Clear Flow
                         </Typography>
-                        <Button color="inherit" onClick={handleLogout}>Logout</Button>
+                        <Button color="inherit" onClick={handleLogout}>
+                            <LogoutIcon sx={{ mr: 1 }} /> Logout
+                        </Button>
                     </Toolbar>
                 </AppBar>
                 <Box
