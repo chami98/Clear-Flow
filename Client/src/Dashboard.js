@@ -209,7 +209,7 @@ export default function Dashboard({ titlePlace, setAuthenticated }) {
                                 onClick={handleAddClearanceClickOpen}
                             >
                                 <AddIcon style={{ fill: 'white', width: isMediumScreen ? '110px' : '70px', height: isMediumScreen ? '110px' : '70px' }} />
-                                <span style={{ marginLeft: '10px', fontSize: isMediumScreen ? '35px' : '20px' }}>Add Clearance Record</span>
+                                <span style={{ marginLeft: '10px', fontSize: isMediumScreen ? '35px' : '20px' }}>Add Asset Record</span>
                             </div>
                         </Grid>
 
@@ -234,7 +234,7 @@ export default function Dashboard({ titlePlace, setAuthenticated }) {
                                 onClick={handleViewClearanceClickOpen}
                             >
                                 <ViewListIcon style={{ fill: 'white', width: isMediumScreen ? '110px' : '70px', height: isMediumScreen ? '110px' : '70px' }} />
-                                <span style={{ marginLeft: '10px', fontSize: isMediumScreen ? '35px' : '20px' }}>View Clearance Records</span>
+                                <span style={{ marginLeft: '10px', fontSize: isMediumScreen ? '35px' : '20px' }}>View Asset Records</span>
                             </div>
                         </Grid>
                     </Grid>
@@ -245,7 +245,7 @@ export default function Dashboard({ titlePlace, setAuthenticated }) {
                 dialogOpen={addClearencedialogOpen}
                 handleClickOpen={handleAddClearanceClickOpen}
                 handleClose={handleAddClearanceClose}
-                title="Add Clearance Record"
+                title="Add Asset Record"
                 contentComponent={<AddClearenceRecord action="add" place={titlePlace} />}
             />
 
@@ -253,7 +253,7 @@ export default function Dashboard({ titlePlace, setAuthenticated }) {
                 dialogOpen={viewClearencedialogOpen}
                 handleClickOpen={handleViewClearanceClickOpen}
                 handleClose={handleViewClearanceClose}
-                title="View Clearance Records"
+                title="View Asset Records"
                 contentComponent={<CollapsibleTable place={titlePlace} />}
             />
 

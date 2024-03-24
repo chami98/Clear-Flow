@@ -204,7 +204,7 @@ export default function AddClearanceRecord({
       </Grid>
       <Box sx={{ paddingLeft: "20px" }}>
         <Typography variant="h6" component="h6">
-          Clearence Details
+          Asset Details
         </Typography>
       </Box>
       <Grid container spacing={2} sx={{ padding: "20px" }}>
