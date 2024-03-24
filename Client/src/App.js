@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SignInSide from './Pages/SignInSide';
 
+
 function App() {
   // Initialize authenticated state with the value retrieved from localStorage or default to false
   const [authenticated, setAuthenticated] = useState(localStorage.getItem('isAuthenticated') === 'true');
