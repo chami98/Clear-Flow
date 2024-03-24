@@ -24,7 +24,7 @@ import { toast } from 'react-toastify';
 
 
 function Row(props) {
-    const { row, handleEdit, handleDelete, place } = props;
+    const { row, handleEdit, handleDelete, place, showActions, showPlace } = props;
     const [open, setOpen] = useState(false);
     const [clearenceRecord, setClearenceRecord] = useState([]);
     const [editClearenceDialogOpen, setEditClearenceDialogOpen] = useState(false);
@@ -65,14 +65,19 @@ function Row(props) {
                 <TableCell align="right">{row.registrationNumber}</TableCell>
                 <TableCell align="right">{row.intake}</TableCell>
                 <TableCell align="right">{row.degree}</TableCell>
-                <TableCell align="right">
+                {showPlace && row.clearenceDetails.map((clearenceDetailsRow) => (
+                    <TableCell align="right">
+                        {clearenceDetailsRow.place}
+                    </TableCell>
+                ))}
+                {showActions && <TableCell align="right">
                     <IconButton color="primary" onClick={handleEditClick}>
                         <EditIcon />
                     </IconButton>
                     <IconButton color="secondary" onClick={handleDeleteClick}>
                         <DeleteIcon />
                     </IconButton>
-                </TableCell>
+                </TableCell>}
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -125,6 +130,7 @@ Row.propTypes = {
         registrationNumber: PropTypes.string.isRequired,
         degree: PropTypes.string.isRequired,
         intake: PropTypes.string.isRequired,
+        place: PropTypes.string.isRequired,
         clearenceDetails: PropTypes.arrayOf(
             PropTypes.shape({
                 description: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
@@ -139,7 +145,7 @@ Row.propTypes = {
     handleDelete: PropTypes.func.isRequired,
 };
 
-function CollapsibleTable({ place }) {
+function CollapsibleTable({ place, showActions = true, showPlace = false }) {
     const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(true);
     const [updatedCount, setUpdatedCount] = useState(0);
@@ -259,12 +265,13 @@ function CollapsibleTable({ place }) {
                         <TableCell align="right">Registration Number</TableCell>
                         <TableCell align="right">Intake</TableCell>
                         <TableCell align="right">Degree</TableCell>
-                        <TableCell align="right">Actions</TableCell>
+                        {showPlace && <TableCell align="right">Place</TableCell>}
+                        {showActions && <TableCell align="right">Actions</TableCell>}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
-                        <Row key={row.fullName} row={row} handleEdit={handleEdit} handleDelete={handleDelete} handleUpdatedCount={handleUpdatedCount} place={place} />
+                        <Row key={row.fullName} row={row} handleEdit={handleEdit} handleDelete={handleDelete} handleUpdatedCount={handleUpdatedCount} place={place} showActions={showActions} showPlace={showPlace} />
                     ))}
                 </TableBody>
             </Table>

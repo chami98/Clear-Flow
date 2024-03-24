@@ -231,7 +231,7 @@ export default function AdminDashboard({ titlePlace, setAuthenticated }) {
                                 onClick={handleViewClearanceClickOpen}
                             >
                                 <ViewListIcon style={{ fill: 'white', width: isMediumScreen ? '110px' : '70px', height: isMediumScreen ? '110px' : '70px' }} />
-                                <span style={{ marginLeft: '10px', fontSize: isMediumScreen ? '35px' : '20px' }}>View Asset Records</span>
+                                <span style={{ marginLeft: '10px', fontSize: isMediumScreen ? '35px' : '20px' }}>View All Asset Records</span>
                             </div>
                         </Grid>
                     </Grid>
@@ -242,8 +242,8 @@ export default function AdminDashboard({ titlePlace, setAuthenticated }) {
                 dialogOpen={viewClearencedialogOpen}
                 handleClickOpen={handleViewClearanceClickOpen}
                 handleClose={handleViewClearanceClose}
-                title="View Asset Records"
-                contentComponent={<CollapsibleTable />}
+                title="View All Asset Records"
+                contentComponent={<CollapsibleTable showActions={false} showPlace={true} />}
             />
 
         </ThemeProvider>
