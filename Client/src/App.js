@@ -40,7 +40,7 @@ function App() {
           />
           <Route
             path="/assetAdministrator"
-            element={isAssetAdministrator ? <AdminDashboard titlePlace={worksAt} /> : <Navigate to="/" />} // Render AdminDashboard if isAssetAdministrator is true
+            element={isAssetAdministrator ? <AdminDashboard titlePlace={worksAt} setAuthenticated={setAuthenticated} /> : <Navigate to="/" />} // Render AdminDashboard if isAssetAdministrator is true
           />
           <Route
             path="/signin"
