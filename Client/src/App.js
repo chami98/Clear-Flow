@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import logo from './logo.svg';
 import './App.css';
 import ComboBox from './ComboBox';
-import Dashboard from './Dashboard';
+import Dashboard from './Components/Dashboard';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SignInSide from './Pages/SignInSide';
