@@ -16,21 +16,22 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems, secondaryListItems } from '../listItems';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import UpdateIcon from '@mui/icons-material/Update';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import DeleteIcon from '@mui/icons-material/Delete';
-import FullScreenDialog from './FullScreenDialog';
-import AddClearenceRecord from './Components/AddClearenceRecord';
-import CollapsibleTable from './Components/CollapsibleTable';
+import FullScreenDialog from '../FullScreenDialog';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AddClearenceRecord from './AddClearenceRecord';
+import CollapsibleTable from './CollapsibleTable';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import firebaseConfig from './firebaseConfig';
+import firebaseConfig from '../firebaseConfig';
 firebase.initializeApp(firebaseConfig);
 
 
@@ -155,7 +156,9 @@ export default function Dashboard({ titlePlace, setAuthenticated }) {
                         >
                             Clear Flow
                         </Typography>
-                        <Button color="inherit" onClick={handleLogout}>Logout</Button>
+                        <Button color="inherit" onClick={handleLogout}>
+                            <LogoutIcon sx={{ mr: 1 }} /> Logout
+                        </Button>
                     </Toolbar>
                 </AppBar>
                 <Box

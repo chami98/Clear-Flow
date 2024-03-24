@@ -149,7 +149,10 @@ function CollapsibleTable({ place }) {
     }
 
     useEffect(() => {
-        axios.get(`https://us-central1-clear-flow-9e0f0.cloudfunctions.net/ClearFlow/data/${place}`)
+        // Check if place is null
+        const url = place ? `https://us-central1-clear-flow-9e0f0.cloudfunctions.net/ClearFlow/data/${place}` : 'https://us-central1-clear-flow-9e0f0.cloudfunctions.net/ClearFlow/data/';
+
+        axios.get(url)
             .then(function (response) {
                 setRows(response.data);
                 setLoading(false);
@@ -159,7 +162,8 @@ function CollapsibleTable({ place }) {
                 console.error(error);
                 setLoading(false);
             });
-    }, [updatedCount]);
+    }, [updatedCount, place]); // Add place to the dependency array
+
 
     const handleEdit = (editedRow) => {
         const updatedRows = rows.map(row => {
