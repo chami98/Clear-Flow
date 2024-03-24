@@ -155,11 +155,6 @@ export default function Dashboard({ titlePlace, setAuthenticated }) {
                         >
                             Clear Flow
                         </Typography>
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
                         <Button color="inherit" onClick={handleLogout}>Logout</Button>
                     </Toolbar>
                 </AppBar>
