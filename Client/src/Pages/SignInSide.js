@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CircularProgress from '@mui/material/CircularProgress'; // Import CircularProgress from Material-UI
+import CircularProgress from '@mui/material/CircularProgress';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,8 +13,8 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast
-import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toastify
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -24,7 +24,7 @@ import Backdrop from '@mui/material/Backdrop';
 firebase.initializeApp(firebaseConfig);
 
 function SignInSide({ setAuthenticated, setWorksAt }) {
-    const [loading, setLoading] = useState(false); // State to track loading state
+    const [loading, setLoading] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -42,7 +42,7 @@ function SignInSide({ setAuthenticated, setWorksAt }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setLoading(true); // Start loading
+        setLoading(true);
 
         const data = new FormData(event.currentTarget);
         const email = data.get('email');
@@ -72,9 +72,9 @@ function SignInSide({ setAuthenticated, setWorksAt }) {
             }
         } catch (error) {
             console.error("Error signing in:", error.message);
-            toast.error(error.message); // Display error message as a toast
+            toast.error(error.message);
         } finally {
-            setLoading(false); // Stop loading
+            setLoading(false);
         }
     };
 
@@ -110,7 +110,7 @@ function SignInSide({ setAuthenticated, setWorksAt }) {
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography variant="p">
-                            ClearFlow - Clearence Management System
+                            ClearFlow - Clearance Management System
                         </Typography>
                         <Typography component="h1" variant="h5">
                             Sign in
@@ -149,14 +149,14 @@ function SignInSide({ setAuthenticated, setWorksAt }) {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
-                                disabled={loading} // Disable button when loading
+                                disabled={loading}
                             >
                                 Sign In
                             </Button>
                             <Backdrop
                                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                                open={loading} // Show backdrop when loading
-                                onClick={() => setLoading(false)} // Allow user to cancel loading by clicking on backdrop
+                                open={loading}
+                                onClick={() => setLoading(false)}
                             >
                                 <CircularProgress color="inherit" />
                                 <Typography variant="h6" color="inherit" component="div" sx={{ ml: 2 }}>
@@ -173,4 +173,3 @@ function SignInSide({ setAuthenticated, setWorksAt }) {
 }
 
 export default SignInSide;
-

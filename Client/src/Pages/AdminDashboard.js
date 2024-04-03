@@ -25,6 +25,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FullScreenDialog from '../FullScreenDialog';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CollapsibleTable from '../Components/CollapsibleTable';
+import AddClearenceRecord from '../Components/AddClearenceRecord'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import firebase from 'firebase/compat/app';
@@ -97,6 +98,12 @@ const defaultTheme = createTheme();
 
 
 export default function AdminDashboard({ titlePlace, setAuthenticated }) {
+
+    React.useEffect(() => {
+        localStorage.setItem('isAssetAdministrator', true);
+    }, [])
+
+
     const [open, setOpen] = React.useState(false);
     const toggleDrawer = () => {
         setOpen(!open);
@@ -238,6 +245,14 @@ export default function AdminDashboard({ titlePlace, setAuthenticated }) {
 
                 </Box>
             </Box>
+
+            <FullScreenDialog
+                dialogOpen={addClearencedialogOpen}
+                handleClickOpen={handleAddClearanceClickOpen}
+                handleClose={handleAddClearanceClose}
+                title="Add Asset Record"
+                contentComponent={<AddClearenceRecord action="add" place={titlePlace} />}
+            />
             <FullScreenDialog
                 dialogOpen={viewClearencedialogOpen}
                 handleClickOpen={handleViewClearanceClickOpen}
