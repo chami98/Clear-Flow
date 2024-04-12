@@ -32,6 +32,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import firebaseConfig from '../firebaseConfig';
+import GenerateClearenceReport from '../Components/GenerateClearenceReport';
 firebase.initializeApp(firebaseConfig);
 
 
@@ -213,7 +214,7 @@ export default function AdminDashboard({ titlePlace, setAuthenticated }) {
                                 onClick={handleAddClearanceClickOpen}
                             >
                                 <AddIcon style={{ fill: 'white', width: isMediumScreen ? '110px' : '70px', height: isMediumScreen ? '110px' : '70px' }} />
-                                <span style={{ marginLeft: '10px', fontSize: isMediumScreen ? '35px' : '20px' }}>Add Asset Record</span>
+                                <span style={{ marginLeft: '10px', fontSize: isMediumScreen ? '35px' : '20px' }}>Generate Clearence Report</span>
                             </div>
                         </Grid>
 
@@ -250,8 +251,8 @@ export default function AdminDashboard({ titlePlace, setAuthenticated }) {
                 dialogOpen={addClearencedialogOpen}
                 handleClickOpen={handleAddClearanceClickOpen}
                 handleClose={handleAddClearanceClose}
-                title="Add Asset Record"
-                contentComponent={<AddClearenceRecord action="add" place={titlePlace} />}
+                title="Generate Clearence Report"
+                contentComponent={<GenerateClearenceReport />}
             />
             <FullScreenDialog
                 dialogOpen={viewClearencedialogOpen}
