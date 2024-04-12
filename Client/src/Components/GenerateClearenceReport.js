@@ -24,8 +24,9 @@ export default function GenerateClearenceReport() {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            height="100%"
+            height="100vh"
             bgcolor="#f1f3f4"
+            paddingX={2}
         >
             <Box
                 component="form"
@@ -34,10 +35,11 @@ export default function GenerateClearenceReport() {
                 boxShadow="0 2px 4px rgba(0,0,0,0.1)"
                 borderRadius="8px"
                 display="flex"
+                flexDirection="column"
                 alignItems="center"
                 maxWidth="600px"
                 width="100%"
-                padding="8px"
+                padding={2}
             >
                 <TextField
                     label="Registration Number"
@@ -58,7 +60,8 @@ export default function GenerateClearenceReport() {
                     variant="contained"
                     color="primary"
                     disableElevation
-                    sx={{ marginLeft: "10px" }}
+                    fullWidth
+                    style={{ marginTop: '16px' }}
                 >
                     Search
                 </Button>
