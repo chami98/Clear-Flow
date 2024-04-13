@@ -36,9 +36,6 @@ export default function FullScreenDialog({
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                             {title}
                         </Typography>
-                        <Button autoFocus color="inherit" onClick={handleClose}>
-                            save
-                        </Button>
                     </Toolbar>
                 </AppBar>
                 {contentComponent}
