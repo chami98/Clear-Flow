@@ -6,16 +6,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import html2canvas from 'html2canvas';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Collapse, Typography } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useEffect } from 'react';
+
+
 
 export default function GenerateClearenceReport() {
     const [registrationNumber, setRegistrationNumber] = useState('');
     const [clearenceRecords, setClearenceRecords] = useState([]);
     const [openRows, setOpenRows] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
 
     useEffect(() => {
         // Initialize openRows with true for each record
@@ -99,7 +99,7 @@ export default function GenerateClearenceReport() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setLoading(true)
+        setSubmitted(true)
         try {
             // Construct the URL with the registration number
             const url = `https://us-central1-clear-flow-9e0f0.cloudfunctions.net/ClearFlow/records`;
@@ -113,7 +113,8 @@ export default function GenerateClearenceReport() {
 
             // Set the clearence records state with the response data
             setClearenceRecords(response.data);
-            setLoading(false)
+
+            console.log(response)
         } catch (error) {
             // Handle errors
             console.error('Error fetching data:', error.message);
@@ -250,7 +251,13 @@ export default function GenerateClearenceReport() {
                 </Button>
 
             </>
+            }
 
+            {
+                submitted && clearenceRecords.length == 0 &&
+                <>
+                    {`No Clearence Records`}
+                </>
             }
         </Box>
     );
