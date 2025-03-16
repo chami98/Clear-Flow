@@ -1,5 +1,7 @@
 const express = require('express');
 const admin = require('firebase-admin');
+const { getFirestore } = require('firebase-admin/firestore');
+
 
 const serviceAccount = require('./serviceAccountKey');
 admin.initializeApp({
@@ -8,6 +10,39 @@ admin.initializeApp({
 
 const app = express();
 app.use(express.json());
+
+const db = getFirestore();
+
+
+app.get('/records', async (req, res) => {
+
+    const qParams = req.query;
+    const params = Object.keys(qParams)
+
+
+    let recordsRef = db.collection('Clearences');
+
+
+    params.forEach(key => {
+        recordsRef = recordsRef.where(key, '==', qParams[key])
+    })
+
+
+    const snapshot = await recordsRef.get();
+
+    const data = [];
+    snapshot.forEach(doc => {
+        data.push({
+            ...doc.data(),
+            id: doc.id
+        })
+    });
+
+    res.json(data)
+
+})
+
+
 
 app.get('/data', async (req, res) => {
     try {

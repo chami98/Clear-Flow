@@ -3,13 +3,45 @@ const admin = require('firebase-admin');
 const serviceAccount = require('./serviceAccountKey');
 const cors = require('cors');
 
+const { getFirestore } = require('firebase-admin/firestore');
+
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
 
+const db = getFirestore();
+
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+app.get('/records', async (req, res) => {
+
+    const qParams = req.query;
+    const params = Object.keys(qParams)
+
+
+    let recordsRef = db.collection('Clearences');
+
+
+    params.forEach(key => {
+        recordsRef = recordsRef.where(key, '==', qParams[key])
+    })
+
+
+    const snapshot = await recordsRef.get();
+
+    const data = [];
+    snapshot.forEach(doc => {
+        data.push({
+            ...doc.data(),
+            id: doc.id
+        })
+    });
+
+    res.json(data)
+
+})
 
 app.get('/data', async (req, res) => {
     try {
